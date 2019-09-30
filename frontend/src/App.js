@@ -4,22 +4,22 @@ import './App.css';
 import socketIOClient from "socket.io-client";
 
 
-export default class app extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props)
 
-    
+
 
     this.state = {
       endpoint: "http://localhost:3000",
       msg: ''
-     }
+    }
 
-     this.socket = socketIOClient(this.state.endpoint);
+    this.socket = socketIOClient(this.state.endpoint);
   }
   send() {
-    
-    this.socket.emit('dosomething') // change 'red' to this.state.color
+
+    this.socket.emit('dosomething')
   }
 
   componentDidMount = () => {
@@ -27,7 +27,7 @@ export default class app extends React.Component {
     //setInterval(this.send(), 1000)
     this.socket.on('sayhello', (msg) => {
       console.log("server said hello")
-      this.setState({msg})
+      this.setState({ msg })
       //document.body.style.backgroundColor = col
     })
   }
