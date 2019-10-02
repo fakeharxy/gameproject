@@ -2,11 +2,9 @@ const express = require('express')
 const app = express()
 const http = require('http')
 const socketIO = require('socket.io')
-var cors = require('cors')
+const CreatureBuilder = require('./builders/CreatureBuilder')
 
-const port = 3000
-
-app.use(cors({ credentials: true, origin: 'http://localhost:3001' }));
+const port = 4000
 
 //app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -21,6 +19,10 @@ const io = socketIO(server)
 io.on('connection', socket => {
     console.log('User connected')
 
+    socket.emit('newcreature', CreatureBuilder.randomCreature());
+    socket.emit('newcreature', CreatureBuilder.randomCreature());
+    socket.emit('newcreature', CreatureBuilder.randomCreature());
+
     socket.on('dosomething', () => {
         console.log('doing something')
         socket.emit('sayhello', 'hello from the server')
@@ -30,7 +32,7 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(3000, function (err) {
+server.listen(port, function (err) {
     if (err) throw err
-    console.log('listening on port 3000')
+    console.log('listening on port ' + port)
 })
