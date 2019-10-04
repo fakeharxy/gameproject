@@ -1,6 +1,8 @@
 class Creature {
-    constructor() {
-        this.name = "unknown";
+
+    constructor(id) {
+        this.id = id;
+        this.name = "unknown " + this.id;
         this.phenotypes = {};
         /*
         {

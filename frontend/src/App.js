@@ -16,8 +16,7 @@ export default class App extends React.Component {
     this.socket = socketIOClient(this.state.endpoint);
   }
   send() {
-
-    this.socket.emit('dosomething')
+    this.socket.emit('mate', this.state.creatures[0].id, this.state.creatures[1].id)
   }
 
   componentDidMount = () => {
@@ -33,7 +32,7 @@ export default class App extends React.Component {
       <div className="App">
 
         {this.state.creatures.map(creature => {
-          return ( <Creature creature={creature} /> )
+          return ( <Creature key={creature.id} creature={creature} /> )
         })}
 
         <button onClick={() => this.send()}>Say hello</button>
