@@ -25,13 +25,13 @@ const game = new Game();
 io.on('connection', socket => {
     console.log('User connected');
 
-    socket.emit('newcreature', game.createRandomCreature());
-    socket.emit('newcreature', game.createRandomCreature());
-    socket.emit('newcreature', game.createRandomCreature());
-
     socket.on('mate', (id1, id2) => {
         console.log('doing something to creatures ' + id1 + ' and ' + id2);
         socket.emit('newcreature', game.breedCreatures(id1, id2));
+    });
+
+    socket.on('getRandom', () => {
+        socket.emit('newcreature', game.createRandomCreature());
     });
 
     socket.on('disconnect', () => {

@@ -11,8 +11,9 @@ const CreatureBuilder = {
         const creature = new Creature(id);
         //assign some random phenotypes
         for (let i = 0; i < 5; i++) {
+            console.log("phenotype added!")
             const colourIndex = Math.floor(Math.random() * constants.COLOUR_NAMES.length); // this could cause the same colour to be set multiple times, which is a happy randomisation for now
-            creature.setPhenotype(this.generateRandomPhenotype(colourIndex));
+            creature.setPhenotype(constants.COLOUR_NAMES[colourIndex], this.generateRandomPhenotype(colourIndex));
         }
         return creature;
     },

@@ -10,6 +10,7 @@ class Game {
         const id = this.generateId();
         console.log("creating creature with id " + id);
         let creature = CreatureBuilder.randomCreature(id);
+        console.log(JSON.stringify(creature));
         this.creaturesById[creature.id] = creature;
         return creature;
     }

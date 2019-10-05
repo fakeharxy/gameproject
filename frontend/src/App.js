@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import socketIOClient from "socket.io-client";
 import Creature from './components/Creature';
+import Board from './components/Board'
 
 
 export default class App extends React.Component {
@@ -15,12 +16,16 @@ export default class App extends React.Component {
 
     this.socket = socketIOClient(this.state.endpoint);
   }
-  send() {
+
+  sendBreedRequest() {
     this.socket.emit('mate', this.state.creatures[0].id, this.state.creatures[1].id)
   }
 
+  sendRandomCreatureRequest() {
+    this.socket.emit('getRandom')
+  }
+
   componentDidMount = () => {
-    console.log("mounted")
     this.socket.on('newcreature', (creature) => {
       console.log("Creature Received!")
       this.setState({ creatures: [...this.state.creatures, creature] })
@@ -30,12 +35,13 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-
-        {this.state.creatures.map(creature => {
-          return ( <Creature key={creature.id} creature={creature} /> )
-        })}
-
-        <button onClick={() => this.send()}>Say hello</button>
+        <Board>
+          {this.state.creatures.map((creature, index) => {
+            return (<Creature key={creature.id} creature={creature} layout={{ x: 10 + 170 * index, y: 10 }}/>)
+          })}
+        </Board>
+        <button onClick={() => this.sendRandomCreatureRequest()}>Get Random Creature</button>
+        <button onClick={() => this.sendBreedRequest()}>Breed</button>
       </div>
     );
   }

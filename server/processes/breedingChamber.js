@@ -13,8 +13,9 @@ module.exports = (id, parent1, parent2) => {
         if (pht1) {
             if (pht2) {
                 newPhenotypes[colour] = mixPhenotypes(pht1, pht2);
+            } else {
+                newPhenotypes[colour] = singlePhenotype(pht1);
             }
-            newPhenotypes[colour] = singlePhenotype(pht1);
         } else {
             if (pht2) {
                 newPhenotypes[colour] = singlePhenotype(pht2);
@@ -35,5 +36,5 @@ function singlePhenotype(phenotype) {
 
 function mixPhenotypes(pht1, pht2) {
     // TODO implement options, e.g. dominance
-    return Math.floor(Math.random() * 2) == 1 ? { ...pht1 } : { ...pht2 }; //currently, Thomas wants to point out, a 50/50 split
+    return (Math.floor(Math.random() * 2) == 1) ? { ...pht1 } : { ...pht2 }; //currently, Thomas wants to point out, a 50/50 split
 }
