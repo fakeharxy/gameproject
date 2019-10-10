@@ -1,8 +1,8 @@
 const COLOUR_NAMES = [ "red", "green", "blue", "black", "yellow", "orange", "purple", "white"];
 const TRAIT_SETS = [
-    [ "teeth", "claw" ],
-    [ "foot", "flipper" ],
-    [ "feathers", "fur" ],
+    [ "teeth", "claws" ],
+    [ "legs", "flippers" ],
+    [ "feathers", "hair" ],
     [ "eyes", "sonar" ],
     [ "gills", "lungs" ],
     [ "invertebrate", "vertebrate" ],
