@@ -4,28 +4,33 @@ import { COLOUR_NAMES } from '../constants';
 const WIDTH = 160;
 const HEIGHT = 75;
 
-function Creature({ creature, layout }) {
-    const [dragging, setDragging] = useState(false);
-    const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+function Creature({ creature, layout, dragging, stopDragging, startDragging }) {
+    //const [dragging, setDragging] = useState(false);
+    //const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
     const [origin, setOrigin] = useState({ x: 0, y: 0 });
 
     // Add our new coordinates to the X and Y position values.
-    const X = layout.x + coordinates.x;
-    const Y = layout.y + coordinates.y;
+    //const X = layout.x + coordinates.x;
+    //const Y = layout.y + coordinates.y;
 
     return (
-        <svg x={X}
-            y={Y}
+        <svg x={layout.x}
+            y={layout.y}
             width={WIDTH}
             height={HEIGHT}
             style={dragging ? { 'opacity': 0.6 } : {}}
-            z={dragging ? 9000 : 1}
             onMouseDown={e => {
                 // We have clicked the element, starting the drag.
-                setOrigin({ x: e.clientX, y: e.clientY });
-                setDragging(true);
+                startDragging(creature.id, { layoutx: layout.x, clickx: e.clientX, layouty: layout.y, clicky: e.clientY });
+                //setOrigin({ x: e.clientX, y: e.clientY });
+                //setDragging(true);
             }}
-            onMouseMove={e => {
+            onMouseUp={() => {
+                // We let go of the mouse, ending our drag.
+                stopDragging(creature.id)
+            }}
+            /*
+            onMouseMove={e => {  
                 // As long as we haven't let go of the mouse button,
                 // we are still dragging.
                 if (dragging) {
@@ -36,14 +41,7 @@ function Creature({ creature, layout }) {
                     });
                 }
             }}
-            onMouseUp={() => {
-                // We let go of the mouse, ending our drag.
-                setDragging(false);
-                setCoordinates({
-                    x: 0,
-                    y: 0,
-                });
-            }}
+            
             onMouseLeave={() => {
                 // We left our element, drag should reset.
                 setDragging(false);
@@ -52,6 +50,7 @@ function Creature({ creature, layout }) {
                     y: 0,
                 });
             }}
+            */
         >
             <rect
                 width="100%"
