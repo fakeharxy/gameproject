@@ -4,7 +4,7 @@ import { COLOUR_NAMES } from '../constants';
 const WIDTH = 160;
 const HEIGHT = 75;
 
-function Creature({ creature, layout, dragging, stopDragging, startDragging }) {
+function Creature({ creature, layout, dragging, draggedTo, startDragging }) {
     //const [dragging, setDragging] = useState(false);
     //const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
     const [origin, setOrigin] = useState({ x: 0, y: 0 });
@@ -18,7 +18,7 @@ function Creature({ creature, layout, dragging, stopDragging, startDragging }) {
             y={layout.y}
             width={WIDTH}
             height={HEIGHT}
-            style={dragging ? { 'opacity': 0.6 } : {}}
+            style={dragging ? { 'opacity': 0.6, 'pointerEvents': 'none' } : {}}
             onMouseDown={e => {
                 // We have clicked the element, starting the drag.
                 startDragging(creature.id, { layoutx: layout.x, clickx: e.clientX, layouty: layout.y, clicky: e.clientY });
@@ -26,31 +26,19 @@ function Creature({ creature, layout, dragging, stopDragging, startDragging }) {
                 //setDragging(true);
             }}
             onMouseUp={() => {
-                // We let go of the mouse, ending our drag.
-                stopDragging(creature.id)
+                // We let go of the mouse, ending our drag on *this* creature.
+                draggedTo(creature);
             }}
-            /*
-            onMouseMove={e => {  
-                // As long as we haven't let go of the mouse button,
-                // we are still dragging.
-                if (dragging) {
-                    e.preventDefault();
-                    setCoordinates({
-                        x: e.clientX - origin.x,
-                        y: e.clientY - origin.y,
-                    });
-                }
+
+            onMouseMove={(e) => {
+                //console.log("mouseMove " + creature.id);
+                //console.log(e);
             }}
-            
-            onMouseLeave={() => {
-                // We left our element, drag should reset.
-                setDragging(false);
-                setCoordinates({
-                    x: 0,
-                    y: 0,
-                });
+
+            onMouseEnter={(e) => {
+                console.log("mouseEnter " + creature.id);
+                //console.log(e);
             }}
-            */
         >
             <rect
                 width="100%"
@@ -68,7 +56,12 @@ function Creature({ creature, layout, dragging, stopDragging, startDragging }) {
     )
     function phenotype(creature, colour, index) {
         if (colour in creature.phenotypes) {
-            return <circle cx={(index + 1) * traitSpacingUnit()} cy="75%" r="10" fill={colour} />
+            return (
+                <React.Fragment key={"frg"+index}>
+                    <circle cx={(index + 1) * traitSpacingUnit()} cy="75%" r="10" fill={colour} />
+                    <text x={(index + 1) * traitSpacingUnit()} y="75%" textAnchor="middle" alignmentBaseline="central">{creature.phenotypes[colour].trait.substring(0,1).toUpperCase()}</text>
+                </React.Fragment>
+            )
         } else {
             //console.log(" no phenotype for colour " + colour);
         }

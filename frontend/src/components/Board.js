@@ -21,7 +21,8 @@ export default class Board extends React.Component {
                         }
                     }}
                     onMouseUp={() => {
-                        // We let go of the mouse, ending our drag.
+                        // We let go of the mouse, ending our drag on 'nothing'.
+                        this.props.stopDragging();
                         //setDragging(false);
                         //setCoordinates({
                         //    x: 0,
@@ -29,6 +30,7 @@ export default class Board extends React.Component {
                         //});
                     }}
                     onMouseLeave={() => {
+                        this.props.stopDragging();
                         // We left our element, drag should reset.
                         //setDragging(false);
                         //setCoordinates({

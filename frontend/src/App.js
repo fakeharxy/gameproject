@@ -12,6 +12,7 @@ export default class App extends React.Component {
     this.draggingUpdate = this.draggingUpdate.bind(this)
     this.startDragging = this.startDragging.bind(this)
     this.stopDragging = this.stopDragging.bind(this)
+    this.draggedTo = this.draggedTo.bind(this)
 
     this.state = {
       endpoint: "http://localhost:4000",
@@ -25,8 +26,11 @@ export default class App extends React.Component {
     this.socket = socketIOClient(this.state.endpoint);
   }
 
-  sendBreedRequest() {
-    this.socket.emit('mate', this.state.creatures[0].id, this.state.creatures[1].id)
+  sendBreedRequest(creature1, creature2) {
+    //this.socket.emit('mate', this.state.creatures[0].id, this.state.creatures[1].id);
+    if (creature1 && creature2) {
+      this.socket.emit('mate', creature1.id, creature2.id);
+    }
   }
 
   sendRandomCreatureRequest() {
@@ -50,9 +54,8 @@ export default class App extends React.Component {
     this.setState({ draggingId: creatureId, dragOrigin: origin });
   }
 
-  stopDragging(creatureId) {
+  stopDragging() {
     //TODO reset dragging if active
-    console.log("creature Id", creatureId)
     this.setState({ draggingId: '', dragX: 0, dragY: 0 });
   }
 
@@ -60,24 +63,29 @@ export default class App extends React.Component {
     this.setState({ dragX: x - this.state.dragOrigin.clickx, dragY: y - this.state.dragOrigin.clicky });
   }
 
+  draggedTo(targetCreature) {
+    this.stopDragging();
+    //breed!
+    this.sendBreedRequest(this.state.creatures[this.state.draggingId], targetCreature);
+  }
+
   render() {
     return (
       <div className="App">
-        <Board dragging={this.state.draggingId} draggingUpdate={this.draggingUpdate}>
+        <Board stopDragging={this.stopDragging} dragging={this.state.draggingId} draggingUpdate={this.draggingUpdate}>
           {Object.keys(this.state.creatures).map((creatureId, index) => {
             return (
               <Creature key={creatureId}
                 creature={this.state.creatures[creatureId]}
-                layout={{ x: 10 + 170 * index, y: 10 }}
+                layout={{ x: 10 + 170 * (index % 4), y: 10 + (80 * Math.floor(index / 4)) }}
                 dragging={this.state.draggingId == creatureId}
                 startDragging={this.startDragging}
-                stopDragging={this.stopDragging} />
+                draggedTo={this.draggedTo} />
             )
           })}
           {this.buildDraggingComponent()}
         </Board>
         <button onClick={() => this.sendRandomCreatureRequest()}>Get Random Creature</button>
-        <button onClick={() => this.sendBreedRequest()}>Breed</button>
       </div>
     );
   }
