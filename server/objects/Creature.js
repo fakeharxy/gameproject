@@ -1,9 +1,12 @@
+const constants = require("../constants.js");
+
 class Creature {
 
     constructor(id) {
         this.id = id;
         this.name = "unknown " + this.id;
         this.phenotypes = {};
+        this.health = constants.HEALTH;
         /*
         {
             red: Phenotype,
@@ -15,6 +18,14 @@ class Creature {
 
     setName(name) {
         this.name = name;
+    }
+
+    decreaseHealth() {
+        this.health--;
+    }
+
+    isDead() {
+        return this.health <= 0;
     }
 
     setPhenotype(colour, phenotype) {

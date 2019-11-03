@@ -1,16 +1,16 @@
-const COLOUR_NAMES = [ "red", "green", "blue", "black", "yellow", "orange", "purple", "white"];
-const TRAIT_SETS = [
-    [ "teeth", "claws" ],
-    [ "legs", "flippers" ],
-    [ "feathers", "hair" ],
-    [ "eyes", "sonar" ],
-    [ "gills", "lungs" ],
-    [ "invertebrate", "vertebrate" ],
-    [ "eggs", "babies" ],
-    [ "warm-blooded", "cold-blooded" ] 
-];
-
-module.exports = {
-    COLOUR_NAMES: COLOUR_NAMES,
-    TRAIT_SETS: TRAIT_SETS
+const CONSTANTS = {
+    COLOUR_NAMES: ["red", "green", "blue", "black", "yellow", "orange", "purple", "white"],
+    TRAIT_SETS: [
+        ["teeth", "claw"],
+        ["foot", "flipper"],
+        ["feathers", "fur"],
+        ["eyes", "sonar"],
+        ["gills", "lungs"],
+        ["invertebrate", "vertebrate"],
+        ["eggs", "babies"],
+        ["warm-blooded", "cold-blooded"]
+    ],
+    HEALTH: 2
 }
+
+module.exports = CONSTANTS;

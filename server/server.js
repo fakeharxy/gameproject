@@ -24,14 +24,15 @@ const game = new Game();
 
 io.on('connection', socket => {
     console.log('User connected');
+    socket.join('game');
 
     socket.on('mate', (id1, id2) => {
-        console.log('doing something to creatures ' + id1 + ' and ' + id2);
-        socket.emit('newcreature', game.breedCreatures(id1, id2));
+        console.log('doing something sexy to creatures ' + id1 + ' and ' + id2);
+        io.in('game').emit('updates', game.breedCreatures(id1, id2));
     });
 
     socket.on('getRandom', () => {
-        socket.emit('newcreature', game.createRandomCreature());
+        io.in('game').emit('updates', game.createRandomCreature());
     });
 
     socket.on('disconnect', () => {

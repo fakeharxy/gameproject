@@ -48,6 +48,8 @@ function Creature({ creature, layout, dragging, draggedTo, startDragging }) {
                 fill="#779eff"
                 stroke="black"
             />
+            <text x="10%" y="10%" textAnchor="right" dominantBaseline="central">Name: {creature.name}</text>
+            <text x="10%" y="30%" textAnchor="right" dominantBaseline="central">Health: {creature.health}</text>
             {COLOUR_NAMES.map((colour, index) => {
                 return phenotype(creature, colour, index);
             })}
@@ -59,7 +61,7 @@ function Creature({ creature, layout, dragging, draggedTo, startDragging }) {
             return (
                 <React.Fragment key={"frg"+index}>
                     <circle cx={(index + 1) * traitSpacingUnit()} cy="75%" r="10" fill={colour} />
-                    <text x={(index + 1) * traitSpacingUnit()} y="75%" textAnchor="middle" alignmentBaseline="central">{creature.phenotypes[colour].trait.substring(0,1).toUpperCase()}</text>
+                    <text x={(index + 1) * traitSpacingUnit()} y="75%" textAnchor="middle" dominantBaseline="central">{creature.phenotypes[colour].trait.substring(0,1).toUpperCase()}</text>
                 </React.Fragment>
             )
         } else {

@@ -38,14 +38,10 @@ export default class App extends React.Component {
   }
 
   componentDidMount = () => {
-    this.socket.on('newcreature', (creature) => {
-      console.log("Creature Received!")
-      this.setState((prevState) => ({
-        creatures: {
-          ...prevState.creatures,
-          [creature.id]: creature
-        }
-      }))
+    this.socket.on('updates', (updates) => {
+      console.log("Update Received!")
+      console.log(updates)
+      this.handleUpdates(updates)
     })
   }
 
@@ -67,6 +63,15 @@ export default class App extends React.Component {
     this.stopDragging();
     //breed!
     this.sendBreedRequest(this.state.creatures[this.state.draggingId], targetCreature);
+  }
+
+  handleUpdates(updates) {
+    this.setState((prevState) => ({
+      creatures: {
+        ...prevState.creatures,
+        ...updates.creatures
+      }
+    }))
   }
 
   render() {

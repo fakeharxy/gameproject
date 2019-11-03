@@ -1,5 +1,6 @@
 const CreatureBuilder = require('../builders/CreatureBuilder');
-const mate = require('../processes/breedingChamber');
+const breedingChamber = require('../processes/breedingChamber');
+const Updates = require('./Updates');
 
 class Game {
     constructor() {
@@ -7,25 +8,32 @@ class Game {
     }
 
     createRandomCreature() {
+        const updates = new Updates();
+
         const id = this.generateId();
         console.log("creating creature with id " + id);
         let creature = CreatureBuilder.randomCreature(id);
         console.log(JSON.stringify(creature));
         this.creaturesById[creature.id] = creature;
-        return creature;
+        updates.addCreature(creature);
+
+        return updates;
     }
 
     breedCreatures(id1, id2) {
+        const updates = new Updates();
         const creature1 = this.creaturesById[id1];
         const creature2 = this.creaturesById[id2];
-        if (!(creature1 && creature2)) {
-            console.log("error!");
-            throw "breeding error"; //TODO
-        }
         const newId = this.generateId();
-        const newCreature = mate(newId, creature1, creature2);
-        this.creaturesById[newCreature.id] = newCreature;
-        return newCreature;
+        const newCreature = breedingChamber(newId, creature1, creature2);
+        if (newCreature) {
+            this.creaturesById[newCreature.id] = newCreature;
+            updates.addCreature(newCreature);
+        }
+        updates.addCreature(creature1);
+        updates.addCreature(creature2);
+        
+        return updates;
     }
 
     generateId() {
