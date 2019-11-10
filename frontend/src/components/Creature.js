@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { COLOUR_NAMES } from '../constants';
+import { COLOUR_NAMES } from '../client_constants';
 
 const WIDTH = 160;
 const HEIGHT = 75;

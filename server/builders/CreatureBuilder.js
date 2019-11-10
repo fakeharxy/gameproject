@@ -1,4 +1,4 @@
-const constants = require("../constants.js");
+const constants = require("../server_constants.js");
 const Creature = require("../objects/Creature");
 const Phenotype = require("../objects/Phenotype")
 

@@ -1,4 +1,4 @@
-const constants = require("../constants.js");
+const constants = require("../server_constants");
 
 class Creature {
 

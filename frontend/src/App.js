@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import socketIOClient from "socket.io-client";
 import Creature from './components/Creature';
-import Board from './components/Board'
-
+import Board from './components/Board';
+import { BOARD_HEIGHT } from './client_constants';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -82,7 +82,7 @@ export default class App extends React.Component {
             return (
               <Creature key={creatureId}
                 creature={this.state.creatures[creatureId]}
-                layout={{ x: 10 + 170 * (index % 4), y: 10 + (80 * Math.floor(index / 4)) }}
+                layout={{ x: 10 + 170 * (index % 7), y: BOARD_HEIGHT - 100 }}
                 dragging={this.state.draggingId == creatureId}
                 startDragging={this.startDragging}
                 draggedTo={this.draggedTo} />

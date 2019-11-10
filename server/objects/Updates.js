@@ -4,7 +4,7 @@ class Updates {
     }
 
     addCreature(creature) {
-        if (creature && creature.id) {
+        if (creature) {
             this.creatures[creature.id] = creature;
         }
     }

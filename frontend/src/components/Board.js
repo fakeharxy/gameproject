@@ -1,13 +1,13 @@
 import React from 'react';
+import { BOARD_HEIGHT, BOARD_WIDTH } from '../client_constants';
 
 export default class Board extends React.Component {
-
+    
     render() {
-       
         return (
-            <div style={{margin: "auto", width: "800px", height: "500px"}}>
+            <div style={{margin: "auto", width: BOARD_WIDTH + "px", height: BOARD_HEIGHT + "px"}}>
                 <svg xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 800 500"
+                    viewBox={"0 0 " + BOARD_WIDTH + " " + BOARD_HEIGHT}
                     onMouseMove={e => {  
                         // As long as we haven't let go of the mouse button,
                         // we are still dragging.
@@ -39,7 +39,7 @@ export default class Board extends React.Component {
                         //});
                     }}
                     >
-                    <rect x="0" y="0" width="800" height="500" stroke="blue" fill="#fafafa" />
+                    <rect x="0" y="0" width={BOARD_WIDTH} height={BOARD_HEIGHT} stroke="blue" fill="#fafafa" />
                     {this.props.children}
                 </svg>
             </div>

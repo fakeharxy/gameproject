@@ -1,4 +1,4 @@
-const constants = require("../constants.js");
+const constants = require("../server_constants.js");
 const CreatureBuilder = require('../builders/CreatureBuilder');
 
 module.exports = (id, parent1, parent2) => {
