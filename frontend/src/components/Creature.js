@@ -45,11 +45,11 @@ function Creature({ creature, layout, dragging, draggedTo, startDragging }) {
                 height="100%"
                 rx="10"
                 ry="10"
-                fill="#779eff"
+                fill={creature.health <= 0 ? "#ff6373" : "#779eff"}
                 stroke="black"
             />
-            <text x="10%" y="10%" textAnchor="right" dominantBaseline="central">Name: {creature.name}</text>
-            <text x="10%" y="30%" textAnchor="right" dominantBaseline="central">Health: {creature.health}</text>
+            <text x="10%" y="10%" textAnchor="right" dominantBaseline="central" pointerEvents="none">Name: {creature.name}</text>
+            <text x="10%" y="30%" textAnchor="right" dominantBaseline="central" pointerEvents="none">Health: {creature.health}</text>
             {COLOUR_NAMES.map((colour, index) => {
                 return phenotype(creature, colour, index);
             })}

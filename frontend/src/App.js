@@ -78,22 +78,42 @@ export default class App extends React.Component {
     return (
       <div className="App">
         <Board stopDragging={this.stopDragging} dragging={this.state.draggingId} draggingUpdate={this.draggingUpdate}>
-          {Object.keys(this.state.creatures).map((creatureId, index) => {
-            return (
-              <Creature key={creatureId}
-                creature={this.state.creatures[creatureId]}
-                layout={{ x: 10 + 170 * (index % 7), y: BOARD_HEIGHT - 100 }}
-                dragging={this.state.draggingId == creatureId}
-                startDragging={this.startDragging}
-                draggedTo={this.draggedTo} />
-            )
-          })}
+          {this.positionCreatures()}
           {this.buildDraggingComponent()}
         </Board>
         <button onClick={() => this.sendRandomCreatureRequest()}>Get Random Creature</button>
       </div>
     );
   }
+
+  positionCreatures() {
+    let handIndex = 0;
+    let deadIndex = 0;
+    return Object.keys(this.state.creatures).map((creatureId) => {
+      let creature = this.state.creatures[creatureId];
+      let x, y;
+      if (creature.health > 0) {
+        //add to hand
+        x = 10 + 170 * (handIndex % 7); // the '% 7' remains from the early version which showed all creatures in rows
+        y = BOARD_HEIGHT - 100;
+        handIndex++;
+      } else {
+        //add to dead stack
+        x = 10 + 170 * 7 + deadIndex * 2;
+        y = BOARD_HEIGHT - 100 + deadIndex * 1;
+        deadIndex++;
+      }
+      return (
+        <Creature key={creatureId}
+          creature={creature}
+          layout={{ x: x, y: y }}
+          dragging={this.state.draggingId == creatureId}
+          startDragging={this.startDragging}
+          draggedTo={this.draggedTo} />
+      )
+    })
+  }
+
   buildDraggingComponent() {
     if (this.state.draggingId) {
       let creature = this.state.creatures[this.state.draggingId];
